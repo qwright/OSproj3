@@ -29,8 +29,8 @@ public int create(char testname[8], int32 size){
   // Also make sure that no other file in use with the same name exists.
     
    string filename(testname);
-   int testinode = 32;
-   for(int i=0;i<32; i++)
+   int testinode = 16;
+   for(int i=0;i<16; i++)
        if(inodes[i].used == 0){
            testinode = i;
            continue;       
@@ -81,7 +81,7 @@ public int delete(char testname[8])
   // Step 4: Write the entire super block back to disk.
    String filename(testname);
     String del= inodes[1].name   ;
-   for(int i=0;i<32; i++)
+   for(int i=0;i<16; i++)
        if(filename == inodes[i].name){
            inodes[i].used = 0;
           CommitToDisk(i);
