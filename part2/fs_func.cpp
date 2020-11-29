@@ -18,7 +18,7 @@ class myFileSystem
 }
 
 
-public int create(char name[8], int32 size)
+public int create(char testname[8], int32 size)
 { //create a file with this name and this size
 
   // high level pseudo code for creating a new file
@@ -27,9 +27,21 @@ public int create(char name[8], int32 size)
   // representing inodes within the super block object.
   // If none exist, then return an error.
   // Also make sure that no other file in use with the same name exists.
+    
+   string filename(testname);
+   int testinode = 32;
+   for(int i=0;i<32; i++)
+       if(inodes[i].used == 0){
+           testinode = i;
+           continue;       
+       }else(filename == inodes[i].name && inodes[i].used != 1){//to make sure not used
+           return false;
 
+       }
+ 
   // Step 2: Look for a number of free blocks equal to the size variable
   // passed to this method. If not enough free blocks exist, then return an error.
+  
 
   // Step 3: Now we know we have an inode and free blocks necessary to
   // create the file. So mark the inode and blocks as used and update the rest of
@@ -38,7 +50,16 @@ public int create(char name[8], int32 size)
   // Step 4: Write the entire super block back to disk.
   //	An easy way to do this is to seek to the beginning of the disk
   //	and write the 1KB memory chunk.
+   inodes[chosenInode].size = size;
+   inodes[chosenInode].name = testname;
+   
+   for(int i = 0; i < size; i++){
+       inodes[testinode].blockPointers[i] = ((testinode)*1024 );
+   }
+   CommitToDisk(chosenInode);
+   return true;
 } // End Create
+
 
 
 
