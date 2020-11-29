@@ -18,8 +18,8 @@ class myFileSystem
 }
 
 
-public int create(char testname[8], int32 size)
-{ //create a file with this name and this size
+public int create(char testname[8], int32 size){ 
+  //create a file with this name and this size
 
   // high level pseudo code for creating a new file
 
