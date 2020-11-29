@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #define MAXINT 7
 
@@ -19,7 +20,10 @@ int main(){
     /*Read addresses into array*/
     int j = 0;
     while(j<MAXINT&&fgets(address, MAXINT, fp)!=NULL){
-        strcpy(address[j],address);
+        char temp[MAXINT];
+        char *temp = temp;
+        strcpy(temp[j],address);
+        address[j]= (unsigned int)(temp[j])
         j++;
     }
     /*initialize offset and page number ints*/
@@ -40,4 +44,3 @@ int main(){
     }
     return 0;
 }
-
