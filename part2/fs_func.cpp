@@ -1,24 +1,61 @@
-include "fs_func.h"
+#include "fs_func.hpp"
+#include <string>
+#include <cstring>
+#include <fstream>
+#include <iostream>
 
-class myFileSystem
-{
+using namespace std;
 
-  public myFileSystem(string diskName)
+myFileSystem::myFileSystem(const char diskName[])
 {
    // Open the file with name diskName
-   
+	string disk = diskName;
+	streampos size;
+	
    // Read the first 1KB and parse it to structs/objecs representing the super block
    // 	An easy way to work with the 1KB memory chunk is to move a pointer to a
    //	position where a struct/object begins. You can use the sizeof operator to help
    //	cleanly determine the position. Next, cast the pointer to a pointer of the
    //	struct/object type.
+	 cout  << "Opened " << diskName << ", reading..." << endl;
+	 char* mem;
 
+	 ifstream fin (diskName, ios::in|ios::binary|ios::ate|ios::out);
+
+	 if(fin.is_open()){
+		 size = fin.tellg();//ios::ate gives us ptr at end of file, so we can check size
+		 mem = new char[1024];
+		 fin.seekg(0, ios::beg);//set ptr to beggining of stream 
+		 fin.read(mem, 1024);
+		 cout << "File size: " << size / 1000 << "kb"<< endl;
+		 if(fin.fail() == 1){//true if there was an issue
+			 cout << "Load failed!" << endl;
+		 }else{
+		 	cout << "Loaded " << strlen(mem) << " bytes to memory" << endl;
+		 }
+	 }
+
+	 for(int i=0; i < strlen(mem); i++){
+			cout << mem[i];
+	 }
+
+	 cout << endl;
+
+	 delete[] mem;
+
+	 fin.close();
+	 cout << "File closed" << endl;
+	
    // Be sure to close the file in a destructor or otherwise before
    // the process exits.
 }
 
+myFileSystem::~myFileSystem()
+{
+}
 
-public int create(char name[8], int32 size)
+
+int myFileSystem::create(char name[8], int size)
 { //create a file with this name and this size
 
   // high level pseudo code for creating a new file
@@ -38,11 +75,12 @@ public int create(char name[8], int32 size)
   // Step 4: Write the entire super block back to disk.
   //	An easy way to do this is to seek to the beginning of the disk
   //	and write the 1KB memory chunk.
+	return 0;
 } // End Create
 
 
 
-public int delete(char name[8])
+int myFileSystem::delete_file(char name[8])
 {
   // Delete the file with this name
 
@@ -57,19 +95,21 @@ public int delete(char name[8])
   // Step 3: Mark inode as free.
 
   // Step 4: Write the entire super block back to disk.
+	return 0;
 
 } // End Delete
 
 
-public int ls(void)
+int myFileSystem::ls(void)
 { 
   // List names of all files on disk
 
   // Step 1: Print the name and size fields of all used inodes.
+	return 0;
 
 } // End ls
 
-public int read(char name[8], int32 blockNum, char buf[1024])
+int myFileSystem::read(char name[8], int blockNum, char buf[1024])
 {
 
    // read this block from this file
@@ -80,11 +120,12 @@ public int read(char name[8], int32 blockNum, char buf[1024])
 
    // Step 2: Seek to blockPointers[blockNum] and read the block
    // from disk to buf.
+	return 0;
 
 } // End read
 
 
-public int write(char name[8], int32 blockNum, char buf[1024])
+int myFileSystem::write(char name[8], int blockNum, char buf[1024])
 {
 
    // write this block to this file
@@ -93,7 +134,7 @@ public int write(char name[8], int32 blockNum, char buf[1024])
    // Step 1: Locate the inode for this file as in Step 1 of delete.
 
    // Step 2: Seek to blockPointers[blockNum] and write buf to disk.
+	return 0;
    
 } // end write
 
-}
