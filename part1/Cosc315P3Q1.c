@@ -19,14 +19,17 @@ int main(){
         return 1;
     }
     /*Read addresses into array*/
-    int j = 0;
-    while(j<MAXINT-1&&fgets(address, MAXINT, fp)!=NULL){
+    int j;
+    for(j=0;j<MAXINT;j++){
+        fscanf(fp, %u, &address[j]);
+    }
+   /* while(j<MAXINT-1&&fgets(address, MAXINT, fp)!=NULL){
         char *temp;
         temp = (int *) malloc(sizeof(int)*MAXINT);
         strcpy(temp[j],address);
         address[j]= (unsigned int)(temp[j]);
         j++;
-    }
+    }*/
     /*initialize offset and page number ints*/
     n = address[0]; /*offset*/
     m = address[1]; /*page number*/
