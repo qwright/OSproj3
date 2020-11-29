@@ -17,7 +17,11 @@ int main(){
         return 1;
     }
     /*Read addresses into array*/
-    address = fgets(address, MAXCHAR, fp) != NULL);
+    int j = 0;
+    while(j<MAXINT&&fgets(address, MAXINT, fp)!=NULL){
+        strcpy(address[j],address);
+        j++;
+    }
     /*initialize offset and page number ints*/
     n = address[0]; /*offset*/
     m = address[1]; /*page number*/
