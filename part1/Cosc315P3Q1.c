@@ -8,7 +8,7 @@ int main(){
     int lineCount = 0;
     int n;
     int m;
-    unsigned int address[MAXINT-2];
+    unsigned int address[MAXINT];
 
     fp = fopen(filename, "r");
     /*Check if filepath is valid*/
@@ -22,7 +22,14 @@ int main(){
     n = address[0];
     m = address[1];
 
+    /*Use bit wise functions to extract the page number and offset*/
+    int i;
+    for(i=2; i<MAXINT; i++){
+        char offset = '\00';
 
-        
+        int pn;
+        int offset;
+        printf("virtual address v%d is in page number %d and offset %d", i-1, pn, offset);
+    }
 }
 
