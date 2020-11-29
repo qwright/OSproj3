@@ -2,7 +2,8 @@ include "fs_func.h"
 
 class myFileSystem
 {
-
+Inode inodes[16];//  max 16 index nodes
+byte free_block[128]; //size of disk
   public myFileSystem(string diskName)
 {
    // Open the file with name diskName
@@ -56,7 +57,7 @@ public int create(char testname[8], int32 size){
    for(int i = 0; i < size; i++){
        inodes[testinode].blockPointers[i] = ((testinode)*1024 );
    }
-   CommitToDisk(chosenInode);
+  // Need to method to commit to disk
    return true;
 } // End Create
 
