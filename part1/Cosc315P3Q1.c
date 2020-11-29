@@ -9,8 +9,8 @@ int main(){
     int lineCount = 0;
     int n;
     int m;
-    unsigned int *address;
-    unsigned int address = (char *) malloc(sizeof(unsigned int)*MAXINT);
+    char *address;
+    unsigned int address = (char *) malloc(sizeof(char)*MAXINT);
 
     fp = fopen(filename, "r");
     /*Check if filepath is valid*/
@@ -24,7 +24,7 @@ int main(){
         char *temp;
         temp = (char *) malloc(sizeof(char)*MAXINT);
         strcpy(temp[j],address);
-        address[j]= (unsigned int)(temp[j])
+        address[j]= (unsigned int)(temp[j]);
         j++;
     }
     /*initialize offset and page number ints*/
