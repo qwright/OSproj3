@@ -5,11 +5,12 @@
 
 int main(){
     FILE *fp;
-    char* filename = OSproj3\part1\input.txt;
+    char* filename = "./input.txt";
     int lineCount = 0;
     int n;
     int m;
-    unsigned int address[MAXINT];
+    unsigned int *address;
+    unsigned int address = (char *) malloc(sizeof(unsigned int)*MAXINT);
 
     fp = fopen(filename, "r");
     /*Check if filepath is valid*/
@@ -19,9 +20,9 @@ int main(){
     }
     /*Read addresses into array*/
     int j = 0;
-    while(j<MAXINT&&fgets(address, MAXINT, fp)!=NULL){
-        char temp[MAXINT];
-        char *temp = temp;
+    while(j<MAXINT-1&&fgets(address, MAXINT, fp)!=NULL){
+        char *temp;
+        temp = (char *) malloc(sizeof(char)*MAXINT);
         strcpy(temp[j],address);
         address[j]= (unsigned int)(temp[j])
         j++;
