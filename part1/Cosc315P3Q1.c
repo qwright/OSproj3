@@ -19,16 +19,19 @@ int main(){
     /*Read addresses into array*/
     address = fgets(address, MAXCHAR, fp) != NULL);
     /*initialize offset and page number ints*/
-    n = address[0];
-    m = address[1];
+    n = address[0]; /*offset*/
+    m = address[1]; /*page number*/
 
     /*Use bit wise functions to extract the page number and offset*/
     int i;
     for(i=2; i<MAXINT; i++){
-        char offset = '\00';
+        /*Extracting offset*/
+        unsigned int offset = address[i]<<m; /*gives the offset followed by m zeroes*/
+        offset = offset>>m; /*gives the value of the offset in binary*/
 
-        int pn;
-        int offset;
+        /*Extracting page number*/
+        unsigned int pn = address[i]>>n; /*gives the value of the offset in binary*/
+
         printf("virtual address v%d is in page number %d and offset %d", i-1, pn, offset);
     }
 }
