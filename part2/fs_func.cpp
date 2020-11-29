@@ -63,7 +63,7 @@ public int create(char testname[8], int32 size){
 
 
 
-public int delete(char name[8])
+public int delete(char testname[8])
 {
   // Delete the file with this name
 
@@ -71,6 +71,7 @@ public int delete(char name[8])
   // by searching the collection of objects
   // representing inodes within the super block object.
   // If it does not exist, then return an error.
+  
 
   // Step 2: Free blocks of the file being deleted by updating
   // the object representing the free block list in the super block object.
@@ -78,6 +79,19 @@ public int delete(char name[8])
   // Step 3: Mark inode as free.
 
   // Step 4: Write the entire super block back to disk.
+   String filename(testname);
+    String del= inodes[1].name   ;
+   for(int i=0;i<32; i++)
+       if(filename == inodes[i].name){
+           inodes[i].used = 0;
+          CommitToDisk(i);
+
+           return true;
+           
+       }
+      
+   return false;
+}  
 
 } // End Delete
 
