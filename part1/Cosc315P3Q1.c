@@ -9,8 +9,8 @@ int main(){
     int lineCount = 0;
     int n;
     int m;
-    char *address;
-    unsigned int address = (char *) malloc(sizeof(char)*MAXINT);
+    unsigned int *address;
+    address = (int *) malloc(sizeof(int)*MAXINT);
 
     fp = fopen(filename, "r");
     /*Check if filepath is valid*/
@@ -22,7 +22,7 @@ int main(){
     int j = 0;
     while(j<MAXINT-1&&fgets(address, MAXINT, fp)!=NULL){
         char *temp;
-        temp = (char *) malloc(sizeof(char)*MAXINT);
+        temp = (int *) malloc(sizeof(int)*MAXINT);
         strcpy(temp[j],address);
         address[j]= (unsigned int)(temp[j]);
         j++;
