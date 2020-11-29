@@ -4,7 +4,7 @@
 
 int main(){
     FILE *fp;
-    char* filename = /*file path*/;
+    char* filename = OSproj3\part1\input.txt;
     int lineCount = 0;
     int n;
     int m;
@@ -34,5 +34,6 @@ int main(){
 
         printf("virtual address v%d is in page number %d and offset %d", i-1, pn, offset);
     }
+    return 0;
 }
 
