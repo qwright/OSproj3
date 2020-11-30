@@ -21,22 +21,20 @@ int main(){
     /*Read addresses into array*/
     int j;
     for(j=0;j<MAXINT;j++){
-        fscanf(fp, %u, &address[j]);
+        if(j==0){
+            fscanf(fp, "%d", &n);
+        }
+        else if(j==1){
+            fscanf(fp, "%d", &m);
+        }
+        else{
+            fscanf(fp, "%u", &address[j]);
+        }
     }
-   /* while(j<MAXINT-1&&fgets(address, MAXINT, fp)!=NULL){
-        char *temp;
-        temp = (int *) malloc(sizeof(int)*MAXINT);
-        strcpy(temp[j],address);
-        address[j]= (unsigned int)(temp[j]);
-        j++;
-    }*/
-    /*initialize offset and page number ints*/
-    n = address[0]; /*offset*/
-    m = address[1]; /*page number*/
-
+  
     /*Use bit wise functions to extract the page number and offset*/
     int i;
-    for(i=2; i<MAXINT; i++){
+    for(i=0; i<MAXINT-3; i++){
         /*Extracting offset*/
         unsigned int offset = address[i]<<m; /*gives the offset followed by m zeroes*/
         offset = offset>>m; /*gives the value of the offset in binary*/
@@ -44,7 +42,7 @@ int main(){
         /*Extracting page number*/
         unsigned int pn = address[i]>>n; /*gives the value of the offset in binary*/
 
-        printf("virtual address v%d is in page number %d and offset %d", i-1, pn, offset);
+        printf("virtual address v%d is in page number %d and offset %d/n", i-1, pn, offset);
     }
     return 0;
 }
