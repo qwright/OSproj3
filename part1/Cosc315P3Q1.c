@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #define MAXINT 7
 
@@ -34,15 +35,16 @@ int main(){
   
     /*Use bit wise functions to extract the page number and offset*/
     int i;
-    for(i=0; i<MAXINT-3; i++){
+    for(i=2; i<MAXINT; i++){
+
         /*Extracting offset*/
-        unsigned int offset = address[i]<<m; /*gives the offset followed by m zeroes*/
-        offset = offset>>m; /*gives the value of the offset in binary*/
+        unsigned int offset = address[i]<<m+16; /*gives the offset followed by m zeroes*/
+        offset = offset>>m+16; /*gives the value of the offset in binary*/
 
         /*Extracting page number*/
         unsigned int pn = address[i]>>n; /*gives the value of the offset in binary*/
 
-        printf("virtual address v%d is in page number %d and offset %d/n", i-1, pn, offset);
+        printf("virtual address v%d is in page number %d and offset %d\n", i-1, pn, offset);
     }
     return 0;
 }
