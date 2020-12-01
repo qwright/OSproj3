@@ -1,4 +1,5 @@
 #include "fs_func.hpp"
+#include "inode.hpp"
 #include <string>
 #include <cstring>
 #include <fstream>
@@ -18,33 +19,37 @@ myFileSystem::myFileSystem(const char diskName[])
    //	cleanly determine the position. Next, cast the pointer to a pointer of the
    //	struct/object type.
 	 cout  << "Opened " << diskName << ", reading..." << endl;
-	 char* mem;
 
 	 ifstream fin (diskName, ios::in|ios::binary|ios::ate|ios::out);
 
 	 if(fin.is_open()){
 		 size = fin.tellg();//ios::ate gives us ptr at end of file, so we can check size
-		 mem = new char[1024];
+		 mem = new char [1024];
 		 fin.seekg(0, ios::beg);//set ptr to beggining of stream 
 		 fin.read(mem, 1024);
-		 cout << "File size: " << size / 1000 << "kb"<< endl;
-		 if(fin.fail() == 1){//true if there was an issue
-			 cout << "Load failed!" << endl;
-		 }else{
-		 	cout << "Loaded " << strlen(mem) << " bytes to memory" << endl;
-		 }
-	 }
+		 cout << "File size: " << size << " bytes" << endl;
+		}else{
+			cout << "Load failed!" << endl;
+	 	}
 
-	 for(int i=0; i < strlen(mem); i++){
-			cout << mem[i];
+	 for(int i=0; i < 16; i++){
+		 std::string used;
+		 if(mem[8*i]==0){
+			used = "Free";
+		 }else{
+			 used = "Used";
+		 }
+			 cout << "Block " << i << " is " << used << endl;
 	 }
+	 fin.seekg(128, ios::beg);
+	 Inode one;
+	 fin.read((char*) & one, sizeof(one));
+	 cout << "Node 1: " << one.inode_used() << endl;
 
 	 cout << endl;
-
-	 delete[] mem;
-
 	 fin.close();
 	 cout << "File closed" << endl;
+
 	
    // Be sure to close the file in a destructor or otherwise before
    // the process exits.
@@ -52,6 +57,7 @@ myFileSystem::myFileSystem(const char diskName[])
 
 myFileSystem::~myFileSystem()
 {
+	 delete[] this->mem;
 }
 
 

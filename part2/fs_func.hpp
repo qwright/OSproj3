@@ -1,4 +1,3 @@
-
 class myFileSystem
 {
 	public:
@@ -9,5 +8,7 @@ class myFileSystem
 		int ls(void);
 		int read(char name[8], int blockNum, char buf[1024]);
 		int write(char name[8], int blockNum, char buf[1024]);
+	private:
+		char * mem;
 };
 
