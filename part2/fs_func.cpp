@@ -3,7 +3,7 @@ include "fs_func.h"
 class myFileSystem
 {
 Inode inodes[16];//  max 16 index nodes
-byte free_block[128]; //size of disk
+byte freeblock[128]; //size of disk
   public myFileSystem(string diskName)
 {
    // Open the file with name diskName
@@ -16,6 +16,12 @@ byte free_block[128]; //size of disk
 
    // Be sure to close the file in a destructor or otherwise before
    // the process exits.
+   this->disk.open(diskName, ios::out | ios::in);    
+   ifstream diskReader(diskname);
+     diskReader.read(freeblock, 128);  
+   for(int i = 0; i < 16; i++)
+       diskReader >> inodes[i];
+   diskReader.close();    
 }
 
 
