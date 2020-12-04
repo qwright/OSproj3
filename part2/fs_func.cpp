@@ -17,7 +17,7 @@ byte freeblock[128]; //size of disk
    // Be sure to close the file in a destructor or otherwise before
    // the process exits.
    this->disk.open(diskName, ios::out | ios::in);    
-   ifstream diskReader(diskname);
+   ifstream diskReader(diskName);
      diskReader.read(freeblock, 128);  
    for(int i = 0; i < 16; i++)
        diskReader >> inodes[i];
