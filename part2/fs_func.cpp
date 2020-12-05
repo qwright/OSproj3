@@ -20,18 +20,19 @@ myFileSystem::myFileSystem(const char diskName[])
    //	struct/object type.
 	 cout  << "Opened " << diskName << ", reading..." << endl;
 
-	 ifstream fin (diskName, ios::in|ios::binary|ios::ate|ios::out);
+	 ifstream fin (diskName, ios::binary|ios::ate);
 
 	 if(fin.is_open()){
 		 size = fin.tellg();//ios::ate gives us ptr at end of file, so we can check size
 		 mem = new char [1024];
+
 		 fin.seekg(0, ios::beg);//set ptr to beggining of stream 
 		 fin.read(mem, 1024);
 		 cout << "File size: " << size << " bytes" << endl;
 		}else{
 			cout << "Load failed!" << endl;
 	 	}
-
+	 cout.flush();
 	 for(int i=0; i < 16; i++){
 		 std::string used;
 		 if(mem[8*i]==0){
@@ -41,10 +42,11 @@ myFileSystem::myFileSystem(const char diskName[])
 		 }
 			 cout << "Block " << i << " is " << used << endl;
 	 }
+	 
 	 fin.seekg(128, ios::beg);
 	 Inode one;
 	 fin.read((char*) & one, sizeof(one));
-	 cout << "Node 1: " << one.inode_used() << endl;
+	 cout << "Node 1: " << one.is_used() << endl;
 
 	 cout << endl;
 	 fin.close();
