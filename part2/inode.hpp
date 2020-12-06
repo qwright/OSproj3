@@ -1,3 +1,5 @@
+#include <string>
+
 class Inode
 {
 	private:
@@ -7,6 +9,9 @@ class Inode
 	int used;//0 is free, 1 is used
 
 	public:
+	Inode(const std::string &name, int size, int ptr[]);
+	~Inode();
 	int is_used();
+	int get_name();
 };
 

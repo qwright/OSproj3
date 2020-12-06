@@ -10,7 +10,7 @@ using namespace std;
 myFileSystem::myFileSystem(const char diskName[])
 {
    // Open the file with name diskName
-	string disk = diskName;
+	disk = diskName;
 	streampos size;
 	
    // Read the first 1KB and parse it to structs/objecs representing the super block
@@ -32,23 +32,14 @@ myFileSystem::myFileSystem(const char diskName[])
 		}else{
 			cout << "Load failed!" << endl;
 	 	}
-	 cout.flush();
-	 for(int i=0; i < 16; i++){
-		 std::string used;
-		 if(mem[8*i]==0){
-			used = "Free";
-		 }else{
-			 used = "Used";
-		 }
-			 cout << "Block " << i << " is " << used << endl;
-	 }
-	 
-	 fin.seekg(128, ios::beg);
+	/*fin.seekg(128, ios::beg);
 	 Inode one;
 	 fin.read((char*) & one, sizeof(one));
 	 cout << "Node 1: " << one.is_used() << endl;
 
 	 cout << endl;
+	cout << sizeof(mem)/sizeof(mem[0]) << endl;
+	*/
 	 fin.close();
 	 cout << "File closed" << endl;
 
@@ -59,14 +50,32 @@ myFileSystem::myFileSystem(const char diskName[])
 
 myFileSystem::~myFileSystem()
 {
+	 cout << "Closing disk";
 	 delete[] this->mem;
 }
 
 
 int myFileSystem::create(char name[8], int size)
 { //create a file with this name and this size
-
+	std::string str(name);
+	int full = 0;
   // high level pseudo code for creating a new file
+	for(int i=0; i < 16; i++){
+		//if free, make set it to used
+		 if(mem[8*i]==0){
+				mem[8*i] = 1;
+				//then update inode
+				int ptr[8] = {};
+				Inode new_node(str, size, ptr);
+				full = 1;
+				cout << "File space found" << endl;
+				break;
+		 }
+	 }
+	if(full==0){
+		cout << "Failed to write file, memory full" << endl;
+	}
+	 
 
   // Step 1: Look for a free inode by searching the collection of objects
   // representing inodes within the super block object.
@@ -83,6 +92,16 @@ int myFileSystem::create(char name[8], int size)
   // Step 4: Write the entire super block back to disk.
   //	An easy way to do this is to seek to the beginning of the disk
   //	and write the 1KB memory chunk.
+	ofstream fout(disk, ios::out | ios::binary);
+	if(!fout){
+		cout << "No file to write to" << endl;
+		return 1;
+	}
+	fout.seekp(0, ios::beg);
+	for(int i=0; i < sizeof(mem); i++){
+		fout.write((char*) &mem[i], sizeof(mem));
+	}
+	cout << "File written" << endl;
 	return 0;
 } // End Create
 
@@ -111,8 +130,15 @@ int myFileSystem::delete_file(char name[8])
 int myFileSystem::ls(void)
 { 
   // List names of all files on disk
+	
 
   // Step 1: Print the name and size fields of all used inodes.
+	for(int i=128; i < 896; i+48)
+	{
+		Inode *node;
+		node = (Inode*)mem[i];
+		node->get_name();
+	}
 	return 0;
 
 } // End ls

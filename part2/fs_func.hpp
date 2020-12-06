@@ -1,3 +1,5 @@
+#include <string>
+
 class myFileSystem
 {
 	public:
@@ -10,5 +12,6 @@ class myFileSystem
 		int write(char name[8], int blockNum, char buf[1024]);
 	private:
 		char * mem;
+		std::string disk;
 };
 
