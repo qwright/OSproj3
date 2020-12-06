@@ -10,3 +10,15 @@ into an array of 32 bit unsigned integers. The program seperates the page number
 of the binary address components.
 
 ## Run Instructions
+
+To build:
+
+	git clone https://github.com/qwright/OSproj3.git
+
+Build with:
+
+	make
+
+Run with:
+
+	./Cosc315P3Q1
