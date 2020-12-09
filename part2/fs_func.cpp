@@ -1,3 +1,9 @@
+#include "fs_func.hpp"
+#include "inode.hpp"
+#include <string>
+#include <cstring>
+#include <fstream>
+#include <iostream>
 include "fs_func.h"
 
 class myFileSystem
